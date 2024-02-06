@@ -13,4 +13,5 @@ services:
       - VERTICA_DBADMIN_PASSWORD=adminpassword  
       - VERTICA_ADVERTISED_HOSTNAME=localhost
     volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./data:/home/dbadmin/docker:rw
