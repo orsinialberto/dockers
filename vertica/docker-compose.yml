@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  vertica:
+    image: vertica/vertica-ce:latest
+    container_name: vertica-container
+    ports:
+      - "5433:5433"  
+    environment:
+      - LICENSE_ACCEPT_EULA=accept
+      - SKIP_SYSTEM_CHECKS=CE
+      - DEFAULT_PASSWORD=password  
+      - VERTICA_DBADMIN_PASSWORD=adminpassword  
+      - VERTICA_ADVERTISED_HOSTNAME=localhost
+    volumes:
+      - ./data:/home/dbadmin/docker:rw
