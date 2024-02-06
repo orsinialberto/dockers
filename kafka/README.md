@@ -1,0 +1,1 @@
+docker run -d --name kafka -v connect-distributed.properties:/etc/kafka/connect-distributed.properties wurstmeister/kafka

@@ -18,6 +18,8 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_DELETE_TOPIC_ENABLE: "true"
       ALLOW_PLAINTEXT_LISTENER: "yes"
+    volumes:
+      - ./connect-distributed.properties:/etc/kafka/connect-distributed.properties
       
   cmak:
     image: hlebalbau/kafka-manager:latest
