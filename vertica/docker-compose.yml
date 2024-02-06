@@ -5,7 +5,8 @@ services:
     image: vertica/vertica-ce:latest
     container_name: vertica-container
     ports:
-      - "5433:5433"  
+      - "5433:5433"
+      - "8080:8080"  
     environment:
       - LICENSE_ACCEPT_EULA=accept
       - SKIP_SYSTEM_CHECKS=CE
@@ -14,4 +15,5 @@ services:
       - VERTICA_ADVERTISED_HOSTNAME=localhost
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./vkconfig.yaml://home/dbadmin/vkconfig.yaml
       - ./data:/home/dbadmin/docker:rw

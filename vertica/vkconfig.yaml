@@ -1,0 +1,12 @@
+kafka:
+  bootstrap_servers: "kafka:29092"
+  topic: "player"
+  group_id: "v_scheduler"
+vertica:
+  connection_string: "jdbc:vertica://localhost:5433/database"
+  username: "dbadmin"
+  password: "adminpassword"
+  table: "players"
+scheduler:
+  type: "kafka"
+  interval: "10s"
