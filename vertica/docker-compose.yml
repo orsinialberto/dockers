@@ -3,7 +3,7 @@ version: '3'
 services:
   vertica:
     image: vertica/vertica-ce:latest
-    container_name: vertica-container
+    container_name: vertica
     ports:
       - "5433:5433"
     environment:
@@ -11,8 +11,18 @@ services:
       - SKIP_SYSTEM_CHECKS=CE
       - DEFAULT_PASSWORD=password  
       - VERTICA_DBADMIN_PASSWORD=adminpassword  
-      - VERTICA_ADVERTISED_HOSTNAME=localhost
+      - VERTICA_DB_HOST=vertica
+      - VERTICA_DB_PORT_DEFAULT=5433
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./vkconfig.yaml://home/dbadmin/vkconfig.yaml
       - ./data:/home/dbadmin/docker:rw
+
+  vertica-kafka-scheduler:
+    image: vertica/kafka-scheduler
+    volumes:
+      - ./vkconfig.conf:/etc/vkconfig.conf
+      - ./vkafka-log-config-debug.xml:/opt/vertica/packages/kafka/config/vkafka-log-config.xml
+      - ./log:/opt/vertica/log
+    command: sh -c "vkconfig launch --conf /etc/vkconfig.conf"
+    depends_on:
+      - vertica
