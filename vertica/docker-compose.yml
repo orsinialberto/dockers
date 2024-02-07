@@ -6,7 +6,6 @@ services:
     container_name: vertica-container
     ports:
       - "5433:5433"
-      - "8080:8080"  
     environment:
       - LICENSE_ACCEPT_EULA=accept
       - SKIP_SYSTEM_CHECKS=CE
