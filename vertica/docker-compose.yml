@@ -18,6 +18,7 @@ services:
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
 
   vertica:
     image: vertica/vertica-ce:latest
@@ -35,16 +36,3 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./data:/home/dbadmin/docker:rw
-
-  vertica-kafka-scheduler:
-    image: vertica/kafka-scheduler
-    networks:
-      - local  
-    volumes:
-      - ./vkconfig.conf:/etc/vkconfig.conf
-      - ./vkafka-log-config-debug.xml:/opt/vertica/packages/kafka/config/vkafka-log-config.xml
-      - ./log:/opt/vertica/log
-    command: sh -c "nohup vkconfig launch --conf /etc/vkconfig.conf >/dev/null 2>&1 &"
-    depends_on:
-      - vertica
-      - kafka
